@@ -1,0 +1,6 @@
+{
+	"pluginName": "",
+	"description": "",
+	"hyphenated": "{{ '-'.join(cookiecutter['pluginName'].lower().split()).replace('_', '-') }}",
+	"pluginClassName": "{{ cookiecutter['hyphenated'].replace('-', ' ').title().replace(' ', '') }}"
+}
