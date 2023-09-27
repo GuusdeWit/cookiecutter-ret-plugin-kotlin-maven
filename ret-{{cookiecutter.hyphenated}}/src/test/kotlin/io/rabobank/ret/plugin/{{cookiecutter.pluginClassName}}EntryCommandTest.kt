@@ -1,9 +1,9 @@
 package io.rabobank.ret.plugin
 
-import io.rabobank.ret.commands.PluginInitializeCommand
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.mock
+import org.mockito.Mockito.mock
 import picocli.CommandLine
+import picocli.CommandLine.Command
 
 class {{cookiecutter.pluginClassName}}EntryCommandTest {
 
@@ -16,12 +16,10 @@ class {{cookiecutter.pluginClassName}}EntryCommandTest {
 }
 
 class CustomInitializationFactory : CommandLine.IFactory {
-    private val pluginInitializeCommand: PluginInitializeCommand = mock()
-    override fun <K : Any?> create(cls: Class<K>?): K {
-        return if (cls?.isInstance(pluginInitializeCommand) == true) {
-            cls.cast(pluginInitializeCommand)
+    override fun <K : Any> create(cls: Class<K>): K =
+        if (cls.isAnnotationPresent(Command::class.java)) {
+            mock(cls)
         } else {
             CommandLine.defaultFactory().create(cls)
         }
-    }
 }
